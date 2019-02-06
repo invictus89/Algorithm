@@ -10,6 +10,7 @@ TOBIN
 결과를 내림차순으로 출력한다.
 */
 
+//주의 : 0은 과연 언제 배열에 넣어야 하나?
 
 #include <stdio.h>
 
@@ -23,14 +24,10 @@ int arr[30];
 
 int N, K;
 
-
-
-
-
+//n과 k의 값을 고려하여 주어진 index의 배열에 0과 1을 넣는다.
 void recursive(int n, int k, int index){
 
-  //출력
-
+  //기저조건 : index과 정수의 자리수와 같으면 배열을 출력 
   if(index >= N){
 
     for(int i = 0; i < N; i++){
@@ -47,20 +44,17 @@ void recursive(int n, int k, int index){
 
   
 
-  //1의 값 배열에 넣기
-
+  //1의 값을 넣는 재귀
   if(k > 0){
 
     arr[index] = 1;
 
     recursive(n-1, k-1, index + 1);
 
-  }
+  }  
 
-  
-
-  //0의 값 배열에 넣기
-
+  //0의 값을 넣는 재귀
+  //이를 위하여 n이라는 값을 넣을 수 있는 남은 자리수가 필요
   if(n - k > 0){
 
     arr[index] = 0;
