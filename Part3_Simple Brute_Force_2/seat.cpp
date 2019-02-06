@@ -1,3 +1,6 @@
+//문제 : 달팽이 배열 채우기
+//루프 대신 재귀함수를 사용하여 풀어 볼 것  
+
 #include <stdio.h>
 
 #include <iostream>
@@ -5,12 +8,6 @@
 using namespace std;
 
 int main() {
-
-
-
-//문제 : 달팽이 배열 채우기
-//루프 대신 재귀함수를 사용하여 풀어 볼 것  
-//Please Enter Your Code Here
 
   int c, r, k;
 
