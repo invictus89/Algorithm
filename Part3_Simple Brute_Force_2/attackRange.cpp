@@ -2,13 +2,9 @@
 //도형마다 값을 채워나간다. 완전 탐색하며 값이 0이 아닌 배열에 닿으면 카운트를 1증가시킨다.
 
 #include <stdio.h>
-
 #include <iostream>
-
 #include <limits.h>
-
 #include <math.h>
-
 using namespace std;
 
 #define SIZE 100
