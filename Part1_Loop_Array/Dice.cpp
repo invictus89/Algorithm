@@ -1,5 +1,5 @@
-/*
-¹®Á¦ : ¼ýÀÚ ÁÖ»çÀ§
+ï»¿/*
+ë¬¸ì œ : ìˆ«ìž ì£¼ì‚¬ìœ„
 */
 #include <stdio.h>
 #include <iostream>

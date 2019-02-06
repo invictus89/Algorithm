@@ -1,6 +1,5 @@
-/*
-
-¹®Á¦ : array3
+ï»¿/*
+ë¬¸ì œ : array3
 */
 
 #include <stdio.h>
