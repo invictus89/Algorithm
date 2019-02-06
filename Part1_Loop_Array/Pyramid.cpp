@@ -2,8 +2,7 @@
 문제 : 숫자 피라미드
 */
 
- #include <stdio.h>
-
+#include <stdio.h>
 #include <iostream>
 
 
