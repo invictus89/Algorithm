@@ -13,72 +13,38 @@ TOBIN
 //주의 : 0은 과연 언제 배열에 넣어야 하나?
 
 #include <stdio.h>
-
 #include <iostream>
-
 using namespace std;
-
-
-
+int N;
+int R;
 int arr[30];
-
-int N, K;
-
-//n과 k의 값을 고려하여 주어진 index의 배열에 0과 1을 넣는다.
-void recursive(int n, int k, int index){
-
-  //기저조건 : index과 정수의 자리수와 같으면 배열을 출력 
+void tobin(int index, int r){
+  //기저
   if(index >= N){
-
-    for(int i = 0; i < N; i++){
-
-      cout << arr[i];
-
+    if(r == R){
+      for(int i = 0; i < N; i++){
+        cout << arr[i];
+      }
+      cout << endl;
     }
-
-    cout << endl;
-
-    return; //재귀 종료
-
+    return;
   }
-
+  //커팅1
+  if(r > R) return;
   
-
-  //1의 값을 넣는 재귀
-  if(k > 0){
-
-    arr[index] = 1;
-
-    recursive(n-1, k-1, index + 1);
-
-  }  
-
-  //0의 값을 넣는 재귀
-  //이를 위하여 n이라는 값을 넣을 수 있는 남은 자리수가 필요
-  if(n - k > 0){
-
-    arr[index] = 0;
-
-    recursive(n-1, k, index + 1);  
-
-  }
+  //1
+  arr[index] = 1;
+  tobin(index+1, r+1);
+  
+  //0
+  arr[index] = 0;
+  tobin(index+1, r);
 
 }
-
-
-
 int main() {
 
-
-
   //Please Enter Your Code Here
-
-  cin >> N >> K;
-
-  //매개변수 : n, k, index
-
-  recursive(N, K, 0);
-
+  cin >> N >> R;
+  tobin(0, 0);
   return 0;
-
 }

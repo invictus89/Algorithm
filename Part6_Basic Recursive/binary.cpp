@@ -22,49 +22,20 @@
 
 #include <stdio.h>
 #include <iostream>
-
 using namespace std;
-
-
-
-void binary(int n){
-
+void printBinary(int n){
   if(n == 1){
-
     cout << 1;
-
-    return;
-
-  }else if(n / 2 < 2){
-
-    cout << n / 2 << n % 2;
-
-    return;
-
   }else{
-
-    binary(n / 2);
-
-    cout << n % 2;
-
+    printBinary(n/2);
+    cout << n%2;
   }
-
 }
-
-
-
 int main() {
 
-
-
   //Please Enter Your Code Here
-
   int n;
-
   cin >> n;
-
-  binary(n);
-
+  printBinary(n);
   return 0;
-
 }
