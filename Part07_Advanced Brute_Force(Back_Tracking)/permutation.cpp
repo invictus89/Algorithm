@@ -1,4 +1,4 @@
-﻿/*
+/*
 순열구하기
 문제
 서로 다른 n개의 원소들 중에서 r개만을 뽑아 일렬로 나열하는 것을 순열이라 한다. 
@@ -35,53 +35,47 @@ dc
 #include <stdio.h>
 #include <iostream>
 using namespace std;
-#define SIZE 26
 
-int N;
-int R;
-bool nextLine = false;
-string arr[SIZE];
-string arr2[SIZE];
-char check[SIZE];
+string arr[12];
+string ansArr[12];
+bool isOkArr[12];
+char c = 'a';
+int N, R;
 
-
-//해당 재귀는 index에 arr 알파벳을 저장한다. 
-void printChar(int index, int r) {
-	//기저 조건
-	if (index >= R) {
-		if (nextLine) cout << endl;
-		nextLine = true;
-		for (int i = 0; i < index + 1; i++) {
-			cout << arr2[i];
+void printAlpha(int idx) {
+	if (idx >= R) {
+		for (int i = 0; i < R; i++) {
+			cout << ansArr[i];
 		}
-		return;
-		// f(n)은 n의 자리에 배열 값을 하나씩 저장하되, f(0) ~ f(n-1)의 값과 중복되서는 안된다.
+		cout << endl;
 	}
 	else {
-		if (r > 0) {
-			for (int i = 0; i < N; i++) {
-				if (check[i] != 0) continue;
-				else {
-					check[i] = 1;
-					arr2[index] = arr[i];
-					printChar(index + 1, r - 1);
-					check[i] = 0;
-				}
+		for (int i = 0; i < N; i++) {
+			if (isOkArr[i] == true) {
+				ansArr[idx] = arr[i];
+				isOkArr[i] = false;
+				printAlpha(idx + 1);
+				isOkArr[i] = true;
 			}
 		}
+
 	}
 }
 
 int main() {
-	char c = 'a';
-	cin >> N >> R;
+
+	//Please Enter Your Code Here
+	scanf("%d %d", &N, &R);
 
 	for (int i = 0; i < N; i++) {
-		string temp = string(1, c++);
-		arr[i] = temp;
-	}
-	printChar(0, R);
+		string str = string(1, c);
+		arr[i] = str;
+		c++;
+		isOkArr[i] = true;
 
+	}
+
+	printAlpha(0);
 
 	return 0;
 }
