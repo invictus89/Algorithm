@@ -2,7 +2,6 @@
 using namespace std;
 #define SIZE 100000
 
-
 void merging(int arr[], int start1, int end1, int start2, int end2){
   //arr함수의 왼쪽(start1 ~ end1)과 오른쪽(start2 ~ end2)까지를
   //합친다.
