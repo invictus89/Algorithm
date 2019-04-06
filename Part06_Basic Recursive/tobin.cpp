@@ -39,7 +39,6 @@ void tobin(int index, int r){
   //0
   arr[index] = 0;
   tobin(index+1, r);
-
 }
 int main() {
 
