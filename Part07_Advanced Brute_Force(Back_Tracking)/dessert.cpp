@@ -17,86 +17,120 @@
 
 */
 
-#include <stdio.h>
 #include <iostream>
-#include <vector>
-#include <string>
-#include <limits.h>
+#include <stdio.h>
 using namespace std;
 
-int N;
-int LEN;
-int count;
-string sign[3] = {"+", "-", "."};
-string arr[30];
-vector<string> v;
+int N, count;
+char signKind[3] = {'+', '-', '.'};
+char signs[20];
+int nums[20];
 
-//0인지 check
-bool check(){
-  bool isZero = false;
-  long long sum = stoll(v[0]);
-  for(int i = 0; i < v.size(); i++){
-    if(v[i] == "+"){
-      sum = sum + stoll(v[i+1]);
-    }else if(v[i] == "-"){
-      sum = sum - stoll(v[i+1]);
+//합을 구하는 함수
+int sumCheck(){
+  // '.'이 처음 나온 것인지 아닌지 구별하는 변수
+  // 이전 결과 값을 이어서 계산해야 하는데
+  // 만약 '.'이 처음나오면 그 결과 값이 없기에 '.'인덱스 값의 숫자를 대입한다.
+  bool fDup = true; 
+
+  //'.'이 연속하여 나올 때 이전 값을 저장하여 새로운 값을 구하기 위한 변수
+  int midVal = 1;
+  int sum = nums[0]; //최종 합을 저장할 변수
+  int flag = 0; // 1('+'), 2('-')
+
+  //처음에 계산하기 위한 로직
+  if(signs[0] == '+') flag = 1;
+  if(signs[0] == '-') flag = 2;
+
+  for(int i = 0; i <= N-2; i++){
+    if(signs[i] == '+' && signs[i+1] != '.'){ 
+      sum = sum + nums[i+1];
+      flag = 1;
+    }else if(signs[i] == '+' && signs[i+1] == '.'){
+      flag = 1; //flag가 0이 되어 계산이 안됨을 방지
     }
-  } 
-  
-  if(sum == 0){
-    isZero = true;
-    count++;
-  }
-  
-  return isZero;
-}
 
-void createVector(){
-   for(int i = 0; i < LEN; i++){
-     if(arr[i] == "."){
-       string temp = v.back() + arr[i+1];
-       v.pop_back();
-       v.push_back(temp);
-     }else{
-       if(arr[i-1] == ".") continue;
-       v.push_back(arr[i]); 
-     }
-   }
-}
+    if(signs[i] == '-' && signs[i+1] != '.'){
+      sum = sum - nums[i+1];
+      flag = 2;
+    }else if(signs[i] == '-' && signs[i+1] == '.'){
+      flag = 2; //flag가 0이 되어 계산이 안됨을 방지
+    }
 
-void printDessert(int index, int plusNum, int minusNum, int pointNum){
-  //기저조건
-  if(index >= LEN){
-    
-    if(plusNum == N-1 || minusNum == N-1 || pointNum == N-1) 
-      return;
-      
-    createVector();
-    
-    if(v.size() > 3){
-      if(check() == 1){
-        if(count <= 20){
-          for(int i = 0; i < LEN; i++){
-            cout << arr[i] << ' ';
-          }
-          cout << endl;
+    if(signs[i] == '.'){
+      int tenNum = 1;
+      if(nums[i+1] < 10) tenNum = 10 * 1;
+      else tenNum = 10 * 10;
+        
+      //'.'이 연달아 나올 때
+      if(signs[i+1] == '.'){
+        if(fDup == true){
+          midVal = nums[i];
         }
+        midVal = midVal * tenNum + nums[i+1];
+        fDup = false; //'.'이 다음에도 나올 것임을 보임
+      //'.'이 다음 요소에서 종료됨
+      }else{
+        if(fDup == true){ //'.'이 처음이라면 배열의 값으로 세팅
+          midVal = nums[i];
+        }
+        midVal = midVal * tenNum + nums[i+1];
+        if(flag == 1){
+          sum = sum + midVal;
+        }
+        if(flag == 2){
+          sum = sum - midVal;
+        }
+        if(flag == 0){
+          sum = midVal;
+        }
+        midVal = 1;
+        fDup = true;
       }
     }
-    v.clear();
-   return;
-  //반복 함수 구현 
-  }else{
-    for(int i = 0; i < 3; i++){
-      arr[index] = sign[i];
-      if(sign[i] == "+") printDessert(index+2, plusNum+1, minusNum, pointNum);
-      if(sign[i] == "-") printDessert(index+2, plusNum, minusNum+1, pointNum);
-      if(sign[i] == ".") printDessert(index+2, plusNum, minusNum, pointNum+1);
+  }
+  return sum;
+}
+
+//idx에 +, -, .을 넣어 요구사항에 맞게 계산 후
+//합이 0인 배열을 출력하는 재귀함수
+void dessert(int idx){
+  if(N == 1) return; //숫자 입력이 한개
+  if(idx >= N-1){
+    //합 체크
+    int val = sumCheck();
+    if(val == 0){
+      count++;
+      if(count <= 20){
+        for(int i = 0; i < N; i++){
+          printf("%d ", nums[i]);
+          if(i < N-1) printf("%c ", signs[i]);
+        }
+        printf("\n");
+        
+      }
     }
+    return;
+  }
+  
+  //재귀 구현
+  for(int i = 0; i < 3; i++){
+    signs[idx] = signKind[i];
+    dessert(idx+1);
   }
 }
 
-int main() {
+int main(){
+  scanf("%d", &N);
+  int data = 1;
+  for(int i = 0; i < N; i++){
+    nums[i] = data++;
+  }
+
+  dessert(0);
+  printf("%d\n", count);
+  return 0;
+}
   cin >> N;
   LEN = N + (N-1);
   int temp = 1;
