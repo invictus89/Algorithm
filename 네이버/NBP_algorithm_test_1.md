@@ -1,7 +1,7 @@
 # 단순 재귀함수 활용 문제
 
 ## 문제
-![nbp_1]("images/NBP Algorithm_1.PNG")
+![nbp_1](./images/nbp_1.png)
 
 
 
