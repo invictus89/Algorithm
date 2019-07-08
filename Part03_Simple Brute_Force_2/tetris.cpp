@@ -79,3 +79,92 @@ int main() {
   cout << answerA << ' ' << answerB << endl;
   return 0;
 }
+
+
+/////////////////////////////////////////////
+2¹øÂ° - 190708
+
+#include <iostream>
+#include <stdio.h>
+#include <limits.h>
+using namespace std;
+const int LEN = 22;
+
+int colCheck[LEN];
+int rowCheck[LEN];
+int arr[LEN][LEN];
+
+int main(){
+  int answer_index = 0;
+  int answer_nums = 0;
+  int c, r;
+  scanf("%d %d", &c, &r);
+  for(int i = 0; i <= r+1; i++){
+    for(int j = 0; j <= c+1; j++){
+      arr[i][j] = 9;
+    }
+  }  
+  for(int i = 1; i <= r; i++){
+    for(int j = 1; j <= c; j++){
+      scanf("%d", &arr[i][j]);
+    }
+  }  
+
+  for(int i = 1; i <= c; i++){
+    int count = 0;
+    for(int j = r; j >= 1; j--){
+      if(arr[j][i] == 0) count++;
+      if(count >= 4){
+        colCheck[i] = true;
+        break;
+      }
+    }
+  }
+
+  for(int i = 1; i <= c; i++){
+    if(colCheck[i] == false) continue;
+    int zeroX;
+    for(int j = r; j >= 1; j--){
+      if(arr[j][i] == 0) {
+        zeroX = j;
+        break;
+      }
+    }
+    for(int k = 0; k < 4; k++){
+      arr[zeroX-k][i] = 1;
+    }
+
+    cout << "===========" << endl;
+    for(int q = 1; q <= r; q++){
+      for(int j = 1; j <= c; j++){
+        cout << arr[q][j] << ' ';
+      }
+      cout << endl;
+    }
+    cout << "===========" << endl;
+
+    int temp_nums = 0;
+    for(int k = zeroX; k >= 1; k--){
+      int count = 0;
+      for(int t = 1; t <= c; t++){
+        if(arr[k][t] == 1) count++;
+      }
+      if(count == c) temp_nums++;
+    }
+    cout << "temp_nums : " << temp_nums << endl;
+
+    if(answer_nums < temp_nums){
+      answer_nums = temp_nums;
+      answer_index = i;
+    }
+
+    for(int k = 0; k < 4; k++){
+      arr[zeroX-k][i] = 0;
+    }
+
+  }
+
+  cout << answer_index << ' ' << answer_nums << endl;
+
+  return 0;
+}
