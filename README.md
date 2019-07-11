@@ -1,4 +1,4 @@
-# Algorithm
+# Algorithm 
 개인 학습을 위한 다양한 알고리즘 문제 풀이
 
 ## 목차
